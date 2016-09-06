@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true">
+    <Appenders>
+        <Appender type="Console" name="CONSOLE">
+            <Layout type="JsonLayout" compact="true" eventEol="true" />
+        </Appender>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="CONSOLE" />
+        </Root>
+    </Loggers>
+</Configuration>

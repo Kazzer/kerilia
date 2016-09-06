@@ -1,0 +1,8 @@
+<FindBugsFilter>
+    <Match>
+        <Class name="~.*TestCase" />
+    </Match>
+    <Match>
+        <Class name="~.*ITCase" />
+    </Match>
+</FindBugsFilter>
