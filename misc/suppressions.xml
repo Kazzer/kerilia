@@ -4,5 +4,4 @@
     <suppress files="[\\/]java-gen[\\/]" checks="." />
     <suppress files="[\\/]test-java-gen[\\/]" checks="." />
     <suppress files="[\\/]generated-sources[\\/]" checks="." />
-    <suppress files="[\\/]src[\\/]test[\\/]java[\\/]" checks="(?:ClassDataAbstractionCoupling|MagicNumber|MultipleStringLiterals|ClassFanOutComplexity|ExecutableStatementCount|ParameterNumber)" />
 </suppressions>

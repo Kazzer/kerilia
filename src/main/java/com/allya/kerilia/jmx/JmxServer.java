@@ -18,8 +18,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 @Singleton
-public class JmxServer implements Daemon
-{
+public class JmxServer implements Daemon {
     private static final Logger LOGGER = LoggerFactory.getLogger(JmxServer.class);
 
     private final com.j256.simplejmx.server.JmxServer server;
@@ -27,8 +26,7 @@ public class JmxServer implements Daemon
 
     @Inject
     public JmxServer(@Named("jmx.registry.port") final int registryPort,
-                     @Named("jmx.server.port") final int serverPort)
-    {
+                     @Named("jmx.server.port") final int serverPort) {
         Validate.exclusiveBetween(PORT_MIN, PORT_MAX, registryPort, "registryPort must be a valid port number");
         Validate.exclusiveBetween(PORT_MIN, PORT_MAX, serverPort, "serverPort must be a valid port number");
 
@@ -38,46 +36,36 @@ public class JmxServer implements Daemon
     }
 
     @Override
-    public void start() throws Exception
-    {
+    public void start() throws Exception {
         server.start();
     }
 
     @Override
-    public void stop() throws Exception
-    {
+    public void stop() throws Exception {
         server.stop();
         registeredObjects.forEach(this::unregisterMBean);
     }
 
-    public void registerMBean(final Object o)
-    {
-        try
-        {
+    public void registerMBean(final Object o) {
+        try {
             server.register(o);
-            synchronized (registeredObjects)
-            {
+            synchronized (registeredObjects) {
                 registeredObjects.add(o);
             }
         }
-        catch (final JMException jme)
-        {
+        catch (final JMException jme) {
             LOGGER.warn("Failed to register MBean for: {}", o, jme);
         }
     }
 
-    public void unregisterMBean(final Object o)
-    {
-        try
-        {
-            synchronized (registeredObjects)
-            {
+    public void unregisterMBean(final Object o) {
+        try {
+            synchronized (registeredObjects) {
                 registeredObjects.remove(o);
             }
             server.unregisterThrow(o);
         }
-        catch (final JMException jme)
-        {
+        catch (final JMException jme) {
             LOGGER.warn("Failed to unregister MBean for: {}", o, jme);
         }
     }

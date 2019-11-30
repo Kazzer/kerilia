@@ -11,17 +11,14 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 
 @Singleton
-public class NotFoundHandler extends AbstractHandler implements HttpHandler
-{
+public class NotFoundHandler extends AbstractHandler implements HttpHandler {
     @Inject
-    public NotFoundHandler()
-    {
+    public NotFoundHandler() {
         super();
     }
 
     @Override
-    public void handleRequest(final HttpServerExchange exchange)
-    {
+    public void handleRequest(final HttpServerExchange exchange) {
         exchange.setStatusCode(NOT_FOUND).setPersistent(false);
         exchange.getResponseHeaders().put(CONTENT_TYPE, TEXT_PLAIN.getMimeType());
         exchange

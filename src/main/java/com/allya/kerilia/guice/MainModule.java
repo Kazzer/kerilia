@@ -10,12 +10,10 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
-public abstract class MainModule extends BaseModule
-{
+public abstract class MainModule extends BaseModule {
     private final Properties properties;
 
-    public MainModule(final Properties properties)
-    {
+    public MainModule(final Properties properties) {
         this.properties = properties;
         checkPrerequisites();
     }
@@ -23,21 +21,18 @@ public abstract class MainModule extends BaseModule
     protected abstract void checkPrerequisites();
 
     @Override
-    protected void configure()
-    {
+    protected void configure() {
         Names.bindProperties(binder(), properties);
     }
 
-    protected Properties getProperties()
-    {
+    protected Properties getProperties() {
         return properties;
     }
 
     @Provides
     @Singleton
     @Inject
-    MBeanServer provideMBeanServer()
-    {
+    MBeanServer provideMBeanServer() {
         return ManagementFactory.getPlatformMBeanServer();
     }
 }

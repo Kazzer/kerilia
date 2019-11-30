@@ -15,14 +15,12 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 
-public class CrashConsole implements Daemon
-{
+public class CrashConsole implements Daemon {
     private final Bootstrap bootstrap;
 
     @Inject
     public CrashConsole(final Injector injector, @Named("crash.telnet.port") final int telnetPort)
-        throws IOException, URISyntaxException
-    {
+        throws IOException, URISyntaxException {
         Validate.isTrue(telnetPort > 0, "telnetPort should be a positive non-null integer");
 
         bootstrap = new Bootstrap(CrashConsole.class.getClassLoader());
@@ -32,8 +30,7 @@ public class CrashConsole implements Daemon
         bootstrap.setConfig(configuration);
 
         final Map<String, Object> attributes = new HashMap<>();
-        for (final Map.Entry<Class<?>, String> entry : getSingletonAttributes().entrySet())
-        {
+        for (final Map.Entry<Class<?>, String> entry : getSingletonAttributes().entrySet()) {
             final Class<?> singletonClass = entry.getKey();
             final String attributeName = entry.getValue();
             final Object singleton = injector.getInstance(singletonClass);
@@ -44,29 +41,24 @@ public class CrashConsole implements Daemon
         bootstrap.addToCmdPath(Path.get("/crash/commands/"));
     }
 
-    protected Map<Class<?>, String> getSingletonAttributes()
-    {
+    protected Map<Class<?>, String> getSingletonAttributes() {
         final Map<Class<?>, String> attributes = new HashMap<>();
 
         return attributes;
     }
 
     @Override
-    public void start()
-    {
-        try
-        {
+    public void start() {
+        try {
             bootstrap.bootstrap();
         }
-        catch (final Exception e)
-        {
+        catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         bootstrap.shutdown();
     }
 }

@@ -16,8 +16,7 @@ import io.undertow.Undertow;
 import io.undertow.server.handlers.PathHandler;
 
 @Singleton
-public class HttpServer implements Daemon
-{
+public class HttpServer implements Daemon {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
 
     private final String httpHost;
@@ -29,8 +28,7 @@ public class HttpServer implements Daemon
     @Inject
     public HttpServer(@Named("http.server.host") final String httpHost,
                       @Named("http.server.port") final int httpPort,
-                      final PathHandler pathHandler)
-    {
+                      final PathHandler pathHandler) {
         this.httpHost = Validate.notNull(httpHost, "httpHost cannot be null");
         Validate.exclusiveBetween(PORT_MIN, PORT_MAX, httpPort, "httpPort must be a valid port number");
         this.httpPort = httpPort;
@@ -38,8 +36,7 @@ public class HttpServer implements Daemon
     }
 
     @Override
-    public void start()
-    {
+    public void start() {
         server = Undertow.builder().addHttpListener(httpPort, httpHost).setHandler(pathHandler).build();
         server.start();
 
@@ -47,8 +44,7 @@ public class HttpServer implements Daemon
     }
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         server.stop();
 
         LOGGER.info("Stopped listening on port: {}", httpPort);

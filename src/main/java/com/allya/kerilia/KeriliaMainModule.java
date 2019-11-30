@@ -11,22 +11,18 @@ import com.google.inject.name.Names;
 
 import io.undertow.server.handlers.PathHandler;
 
-public class KeriliaMainModule extends MainModule
-{
-    public KeriliaMainModule()
-    {
+public class KeriliaMainModule extends MainModule {
+    public KeriliaMainModule() {
         super(ConfigParser.getProperties(Constants.APP_NAME));
     }
 
     @Override
-    protected void checkPrerequisites()
-    {
+    protected void checkPrerequisites() {
         // nothing to do yet
     }
 
     @Override
-    protected void configure()
-    {
+    protected void configure() {
         super.configure();
         binder().disableCircularProxies();
 
@@ -42,8 +38,7 @@ public class KeriliaMainModule extends MainModule
     @Provides
     @Singleton
     @Inject
-    PathHandler providePathHandler(final NotFoundHandler notFoundHandler)
-    {
+    PathHandler providePathHandler(final NotFoundHandler notFoundHandler) {
         return new PathHandler(notFoundHandler);
     }
 }

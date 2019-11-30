@@ -11,35 +11,44 @@
 
     <properties>
         <http-server.mainClass>com.allya.kerilia.KeriliaApp</http-server.mainClass>
-        <java.version>1.8</java.version>
-        <checkstyle.version>7.1</checkstyle.version>
-        <commons.version>3.4</commons.version>
+        <java.version>11</java.version>
+        <checkstyle.version>8.27</checkstyle.version>
+        <commons.version>3.9</commons.version>
         <crash.version>1.3.2</crash.version>
-        <findbugs.version>3.0.4</findbugs.version>
-        <guava.version>19.0</guava.version>
-        <guice.version>4.1.0</guice.version>
-        <hamcrest.version>1.3</hamcrest.version>
-        <httpcore.version>4.4.5</httpcore.version>
-        <jackson.version>2.8.2</jackson.version>
-        <jacoco.version>0.7.7.201606060606</jacoco.version>
+        <guava.version>28.1-jre</guava.version>
+        <guice.version>4.2.2</guice.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <httpcore.version>4.4.12</httpcore.version>
+        <jackson.version>2.10.1</jackson.version>
+        <jacoco.version>0.8.4</jacoco.version>
         <junit.version>4.12</junit.version>
-        <log4j.version>2.6.2</log4j.version>
-        <maven.checkstyle.version>2.17</maven.checkstyle.version>
-        <maven.compiler.version>3.5.1</maven.compiler.version>
+        <log4j.version>2.12.1</log4j.version>
+        <maven.checkstyle.version>3.1.0</maven.checkstyle.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.enforcer.version>1.4.1</maven.enforcer.version>
-        <maven.failsafe.version>2.19.1</maven.failsafe.version>
+        <maven.failsafe.version>2.22.2</maven.failsafe.version>
+        <maven.gpg.version>1.6</maven.gpg.version>
+        <maven.install.version>2.5.2</maven.install.version>
+        <maven.jar.version>3.1.2</maven.jar.version>
+        <maven.javadoc.version>3.1.0</maven.javadoc.version>
         <maven.release.version>2.5.3</maven.release.version>
-        <maven.resources.version>3.0.1</maven.resources.version>
-        <maven.shade.version>2.4.3</maven.shade.version>
-        <maven.surefire.version>2.19.1</maven.surefire.version>
+        <maven.resources.version>3.1.0</maven.resources.version>
+        <maven.shade.version>3.2.1</maven.shade.version>
+        <maven.source.version>3.1.0</maven.source.version>
+        <maven.surefire.version>2.22.2</maven.surefire.version>
         <mockito.version>1.10.19</mockito.version>
-        <powermock.version>1.5.1</powermock.version>
-        <simplejmx.version>1.12</simplejmx.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <undertow.version>1.4.0.Final</undertow.version>
+        <powermock.version>1.7.4</powermock.version>
+        <powermock.junit.version>2.0.4</powermock.junit.version>
+        <simplejmx.version>1.17</simplejmx.version>
+        <slf4j.version>1.7.29</slf4j.version>
+        <spotbugs.version>3.1.12</spotbugs.version>
+        <spotbugs.maven.version>3.1.11</spotbugs.maven.version>
+        <undertow.version>2.0.28.Final</undertow.version>
+        <versions.version>2.7</versions.version>
 
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss.SSSZ</maven.build.timestamp.format>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <source.test.directory>src/test/java</source.test.directory>
     </properties>
@@ -163,7 +172,7 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>${powermock.version}</version>
+            <version>${powermock.junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -177,8 +186,10 @@
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>${source.test.directory}</testSourceDirectory>
+
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven.enforcer.version}</version>
                 <executions>
@@ -190,7 +201,7 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[1.8.0,)</version>
+                                    <version>[11.0.0,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -203,7 +214,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>[3.2.5,)</version>
+                                    <version>[3.5.2,)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -212,62 +223,7 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.version}</version>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                        <arg>-Xlint:-processing</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
-                    <showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven.release.version}</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.version}</version>
-                <configuration>
-                    <useFile>false</useFile>
-                    <disableXmlReport>false</disableXmlReport>
-                    <includes>
-                        <include>**/*Test.*</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.version}</version>
-                <executions>
-                    <execution>
-                        <id>failsafe</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Validation -->
-            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven.checkstyle.version}</version>
                 <dependencies>
@@ -280,42 +236,18 @@
                 <executions>
                     <execution>
                         <id>checkstyle-check</id>
-                        <phase>process-classes</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <!-- temporary style document until we settle on one as a squad -->
                             <configLocation>${project.basedir}/misc/checkstyle.xml</configLocation>
-                            <consoleOutput>true</consoleOutput>
-                            <encoding>UTF-8</encoding>
-                            <failsOnError>true</failsOnError>
+                            <failsOnViolation>true</failsOnViolation>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             <suppressionsLocation>${project.basedir}/misc/suppressions.xml</suppressionsLocation>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${findbugs.version}</version>
-                <executions>
-                    <execution>
-                        <id>findbugs-check</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <fork>false</fork>
-                    <excludeFilterFile>${project.basedir}/misc/findbugs-exclusions-filter.xml</excludeFilterFile>
-                    <findbugsXmlOutput>true</findbugsXmlOutput>
-                    <xmlOutput>true</xmlOutput>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -351,6 +283,148 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                        <arg>-Xlint:-processing</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs.maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>${spotbugs.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>spotbugs-check</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludeFilterFile>${project.basedir}/misc/spotbugs-exclusions.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.*</include>
+                    </includes>
+                    <useFile>false</useFile>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${maven.install.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven.release.version}</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <goals>deploy</goals>
+                    <releaseProfiles>release</releaseProfiles>
+                    <useReleaseProfile>false</useReleaseProfile>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <id>failsafe</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>${maven.shade.version}</version>
                 <configuration>
@@ -399,6 +473,37 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>dependency-upgrades</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <version>${versions.version}</version>
+                        <configuration>
+                            <rulesUri>file:///${project.basedir}/misc/version-rules.xml</rulesUri>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>property-upgrades</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>display-property-updates</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>dependency-upgrades</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>display-dependency-updates</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>run-regression</id>
             <properties>

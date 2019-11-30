@@ -16,36 +16,28 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class ConfigParser
-{
+public final class ConfigParser {
     private static final String CLASSPATH_PREFIX = "classpath:";
     private static final String LOADING_PROPERTIES = "Loading properties from: {}";
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigParser.class);
 
-    private ConfigParser()
-    {
+    private ConfigParser() {
         // utility class
     }
 
-    public static Properties getProperties(final String appName)
-    {
+    public static Properties getProperties(final String appName) {
         return getProperties(getConfigurationFiles(appName));
     }
 
-    private static Properties getProperties(final String... configFiles)
-    {
+    private static Properties getProperties(final String... configFiles) {
         final Properties properties = new Properties();
 
-        Stream.of(configFiles).forEach(path ->
-        {
-            if (path != null)
-            {
-                if (path.startsWith(CLASSPATH_PREFIX))
-                {
+        Stream.of(configFiles).forEach(path -> {
+            if (path != null) {
+                if (path.startsWith(CLASSPATH_PREFIX)) {
                     loadResource(properties, path);
                 }
-                else
-                {
+                else {
                     loadFile(properties, path);
                 }
             }
@@ -60,8 +52,7 @@ public final class ConfigParser
         return properties;
     }
 
-    private static String[] getConfigurationFiles(final String appName)
-    {
+    private static String[] getConfigurationFiles(final String appName) {
         Validate.notBlank(appName, "appName cannot be blank");
 
         final String defaultConfig = CLASSPATH_PREFIX + appName + "-default.properties";
@@ -78,45 +69,36 @@ public final class ConfigParser
                : new String[]{defaultConfig, overrideConfig};
     }
 
-    private static void loadFile(final Properties properties, final String filePath)
-    {
+    private static void loadFile(final Properties properties, final String filePath) {
         final File file = new File(filePath);
-        if (!file.exists())
-        {
+        if (!file.exists()) {
             return;
         }
 
-        if (!file.canRead())
-        {
+        if (!file.canRead()) {
             throw new IllegalStateException("Properties file " + filePath + " exists but is not readable");
         }
 
-        try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))
-        {
+        try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
             LOGGER.info(LOADING_PROPERTIES, filePath);
             properties.load(reader);
         }
-        catch (final IOException ioe)
-        {
+        catch (final IOException ioe) {
             throw new IllegalStateException("Failed to load properties from: " + filePath);
         }
     }
 
-    private static void loadResource(final Properties properties, final String resource)
-    {
+    private static void loadResource(final Properties properties, final String resource) {
         try (
             InputStream resourceStream = ConfigParser.class
                 .getClassLoader()
-                .getResourceAsStream(resource.substring(CLASSPATH_PREFIX.length()));)
-        {
-            if (resourceStream != null)
-            {
+                .getResourceAsStream(resource.substring(CLASSPATH_PREFIX.length()));) {
+            if (resourceStream != null) {
                 LOGGER.info(LOADING_PROPERTIES, resource);
                 properties.load(resourceStream);
             }
         }
-        catch (final IOException ioe)
-        {
+        catch (final IOException ioe) {
             throw new IllegalStateException("Failed to load properties from classpath: " + resource, ioe);
         }
     }

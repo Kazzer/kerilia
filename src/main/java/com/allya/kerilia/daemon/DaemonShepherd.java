@@ -16,36 +16,30 @@ import com.google.inject.name.Names;
 import com.j256.simplejmx.common.JmxFolderName;
 import com.j256.simplejmx.common.JmxSelfNaming;
 
-public class DaemonShepherd implements JmxSelfNaming
-{
+public class DaemonShepherd implements JmxSelfNaming {
     private static final Logger LOGGER = LoggerFactory.getLogger(DaemonShepherd.class);
 
     private final List<Daemon> daemons;
 
-    public DaemonShepherd(final Daemon... daemons)
-    {
+    public DaemonShepherd(final Daemon... daemons) {
         this.daemons = Stream
             .of(daemons)
             .map(daemon -> Validate.notNull(daemon, "Daemons cannot be null"))
             .collect(toCollection(ArrayList::new));
     }
 
-    public void start()
-    {
+    public void start() {
         LOGGER.info("Starting application...");
-        daemons.forEach(daemon -> uncheck(() ->
-        {
+        daemons.forEach(daemon -> uncheck(() -> {
             LOGGER.info("Starting {}", daemon.getClass().getSimpleName());
             daemon.start();
         }));
         LOGGER.info("Started all daemons");
     }
 
-    public void stop()
-    {
+    public void stop() {
         LOGGER.info("Shutting down application...");
-        Lists.reverse(daemons).forEach(daemon -> uncheck(() ->
-        {
+        Lists.reverse(daemons).forEach(daemon -> uncheck(() -> {
             LOGGER.info("Stopping {}", daemon.getClass().getSimpleName());
             daemon.stop();
         }));
@@ -53,20 +47,17 @@ public class DaemonShepherd implements JmxSelfNaming
     }
 
     @Override
-    public String getJmxDomainName()
-    {
+    public String getJmxDomainName() {
         return Names.named("jmx.domain.name").value();
     }
 
     @Override
-    public String getJmxBeanName()
-    {
+    public String getJmxBeanName() {
         return "DaemonShepherd";
     }
 
     @Override
-    public JmxFolderName[] getJmxFolderNames()
-    {
+    public JmxFolderName[] getJmxFolderNames() {
         return null;
     }
 }

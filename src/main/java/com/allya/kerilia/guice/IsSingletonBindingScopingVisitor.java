@@ -7,29 +7,24 @@ import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import com.google.inject.spi.BindingScopingVisitor;
 
-public class IsSingletonBindingScopingVisitor implements BindingScopingVisitor<Boolean>
-{
+public class IsSingletonBindingScopingVisitor implements BindingScopingVisitor<Boolean> {
     @Override
-    public Boolean visitEagerSingleton()
-    {
+    public Boolean visitEagerSingleton() {
         return Boolean.TRUE;
     }
 
     @Override
-    public Boolean visitScope(final Scope scope)
-    {
+    public Boolean visitScope(final Scope scope) {
         return scope == Scopes.SINGLETON;
     }
 
     @Override
-    public Boolean visitScopeAnnotation(final Class<? extends Annotation> scopeAnnotation)
-    {
+    public Boolean visitScopeAnnotation(final Class<? extends Annotation> scopeAnnotation) {
         return scopeAnnotation == Singleton.class;
     }
 
     @Override
-    public Boolean visitNoScoping()
-    {
+    public Boolean visitNoScoping() {
         return Boolean.FALSE;
     }
 }

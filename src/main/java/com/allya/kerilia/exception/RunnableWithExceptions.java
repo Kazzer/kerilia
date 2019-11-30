@@ -1,6 +1,5 @@
 package com.allya.kerilia.exception;
 
-public interface RunnableWithExceptions
-{
+public interface RunnableWithExceptions {
     void accept() throws Exception;
 }
