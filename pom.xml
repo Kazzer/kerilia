@@ -12,7 +12,7 @@
     <properties>
         <http-server.mainClass>com.allya.kerilia.KeriliaApp</http-server.mainClass>
         <java.version>11</java.version>
-        <checkstyle.version>8.27</checkstyle.version>
+        <checkstyle.version>8.29</checkstyle.version>
         <commons.version>3.9</commons.version>
         <crash.version>1.3.2</crash.version>
         <guava.version>28.1-jre</guava.version>
