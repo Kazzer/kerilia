@@ -21,7 +21,7 @@
         <httpcore.version>4.4.12</httpcore.version>
         <jackson.version>2.10.1</jackson.version>
         <jacoco.version>0.8.4</jacoco.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <log4j.version>2.12.1</log4j.version>
         <maven.checkstyle.version>3.1.0</maven.checkstyle.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
