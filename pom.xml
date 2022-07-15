@@ -43,7 +43,7 @@
         <slf4j.version>1.7.29</slf4j.version>
         <spotbugs.version>3.1.12</spotbugs.version>
         <spotbugs.maven.version>3.1.11</spotbugs.maven.version>
-        <undertow.version>2.0.28.Final</undertow.version>
+        <undertow.version>2.2.15.Final</undertow.version>
         <versions.version>2.7</versions.version>
 
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
